@@ -1,0 +1,22 @@
+{
+    "name": "Premier Legue",
+    "short_name": "Premier Legue",
+    "description": "Premier Legue",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#00897B",
+    "theme_color": "#00897B",
+    "icons": [
+        {
+            "src": "/assets/premierLegue.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/premierLegue.png",
+            "sizes": "196x196",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ]
+}
