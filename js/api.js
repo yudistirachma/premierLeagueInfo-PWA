@@ -50,34 +50,35 @@ function getStandings() {
       }
     })
   }
-
-  fetch(BASE_URL + "competitions/2021/standings", {
-    headers : { 'X-Auth-Token' : API_KEY }
-  })
-  .then(status)
-  .then(json)
-  .then(function(data) {
-      let standingsHTML = "";
-      data.standings[0].table.forEach(function(standing) {
-        standingsHTML += `
-          <tr>
-            <td>
-              <a href="./club.html?id=${standing.team.id}">
-                <img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/><br>${standing.team.name}
-              </a>
-            </td>
-            <td>${standing.playedGames}</td>
-            <td>${standing.won}</td>
-            <td>${standing.lost}</td>
-            <td>${standing.draw}</td>
-            <td>${standing.points}</td>
-          </tr>
-        `;
-      });
-      // Sisipkan komponen card ke dalam elemen dengan id #content
-      document.getElementById("standings").innerHTML = standingsHTML;
-  })
-  .catch(error);
+  if (navigator.onLine){
+    fetch(BASE_URL + "competitions/2021/standings", {
+      headers : { 'X-Auth-Token' : API_KEY }
+    })
+    .then(status)
+    .then(json)
+    .then(function(data) {
+        let standingsHTML = "";
+        data.standings[0].table.forEach(function(standing) {
+          standingsHTML += `
+            <tr>
+              <td>
+                <a href="./club.html?id=${standing.team.id}">
+                  <img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/><br>${standing.team.name}
+                </a>
+              </td>
+              <td>${standing.playedGames}</td>
+              <td>${standing.won}</td>
+              <td>${standing.lost}</td>
+              <td>${standing.draw}</td>
+              <td>${standing.points}</td>
+            </tr>
+          `;
+        });
+        // Sisipkan komponen card ke dalam elemen dengan id #content
+        document.getElementById("standings").innerHTML = standingsHTML;
+    })
+    .catch(error);
+  }
 }
 
 function getClubById() {
@@ -111,9 +112,10 @@ function getClubById() {
         }
       })
     }
-    fetch(BASE_URL + "teams/" + idParam, {
-      headers : { 'X-Auth-Token' : API_KEY }
-    })
+    if (navigator.onLine){
+      fetch(BASE_URL + "teams/" + idParam, {
+        headers : { 'X-Auth-Token' : API_KEY }
+      })
       .then(status)
       .then(json)
       .then(function(data) {
@@ -137,12 +139,12 @@ function getClubById() {
         // Kirim objek data hasil parsing json agar bisa disimpan ke indexed db
         resolve(data);
       });
+    }
   });
 }
 
 function getSavedClubs() {
   getAll().then(function(clubs) {
-    console.log(clubs);
     // Menyusun komponen card artikel secara dinamis
     var clubsHTML = "";
     clubs.forEach(function(club) {
@@ -174,7 +176,6 @@ function getSavedClubById() {
   let idParam = urlParams.get("id");
   
   getById(Number(idParam)).then(function(data) {
-    console.log(data);
     let clubHTML = '';
     clubHTML = `
             <div class="card">

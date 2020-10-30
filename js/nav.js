@@ -48,8 +48,6 @@ document.addEventListener("DOMContentLoaded", function() {
             getStandings();
           } else if (page === "saved") {
             getSavedClubs();
-          } else if (page === "stats") {
-            
           }
         if (this.status == 200) {
             content.innerHTML = xhttp.responseText;

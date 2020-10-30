@@ -8,7 +8,7 @@
   <link rel="apple-touch-icon" href="assets/premierLegue.png">
   <link rel="stylesheet" href="css/materialize.min.css">
   <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#00897B"/>
+  <meta name="theme-color" content="#c5cae9"/>
 </head>
 <body>
 
@@ -28,6 +28,7 @@
 
   <script type="text/javascript" src="https://unpkg.com/snarkdown@1.0.2/dist/snarkdown.umd.js"></script>
   <script src="js/materialize.min.js"></script>
+  <script src="js/notifConfig.js"></script>
   <script src="js/api.js"></script>
   <script src="js/idb.js"></script>
   <script src="js/db.js"></script>
@@ -44,6 +45,7 @@
             .catch(function() {
               console.log("Pendaftaran ServiceWorker gagal");
             });
+          requestPermission();
         });
       } else {
         console.log("ServiceWorker belum didukung browser ini.");

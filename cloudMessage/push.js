@@ -11,13 +11,13 @@ webPush.setVapidDetails(
    vapidKeys.privateKey
 )
 var pushSubscription = {
-   "endpoint": "https://fcm.googleapis.com/fcm/send/fFuDWBT6Xjc:APA91bFUw2hNOsvOLHjBTPgBIc6M_Ew1KngXGvFA-vtiT_E3E8lSJd-eVzl8I9kKT3q3Odm2kA05vAshF6b-uMVHJtdcGZ4EjtteRps4-G0mrYo9krHe-vkyFvEFGOkcAFxvYzag0MS7",
+   "endpoint": "https://fcm.googleapis.com/fcm/send/cue_jNqM_PI:APA91bHt1sffOm7z3ztjhVzg3wGhsiQBpiXl41B5dps-QoBzEuJvNeSiBqICoVHs2KXj_HOfB7W256NFhTZ9ZtAe2d2ZC6mppjGNEtONsVGmLehlBHBli3uf8UebHRmvKdZFDCrarF82",
    "keys": {
-       "p256dh": "BNonuUmVjiKQBj7QGUunDcm2WYpYLbwuAhxjIDdzRpuwku/V14MPQg9ANDsyYSt83yr7usi11to0xmWXGHXfhqA=",
-       "auth": "Q2kwRVEWoZmQk4V+WYocMw=="
+       "p256dh": "BG/QBM/6kBdt2pjah/2KsXNYwL8sPAWHkQVgefY7NbPAGMZ9TFJBDLYxYXYLHpg/1gFgz8xcH2hAKFdFeNOHhaA=",
+       "auth": "Wj2D6S6i9Y47q+QJcSsBTA=="
    }
 };
-var payload = 'Selamat! Aplikasi Anda sudah dapat menerima push notifikasi!';
+var payload = 'Ayo cek aplikasi ada info klasemen terbalu loh !';
  
 var options = {
    gcmAPIKey: '288788509592',

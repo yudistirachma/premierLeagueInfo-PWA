@@ -4,8 +4,9 @@
     "description": "Premier Legue",
     "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#00897B",
-    "theme_color": "#00897B",
+    "background_color": "#c5cae9",
+    "theme_color": "#c5cae9",
+    "gcm_sender_id": "288788509592",
     "icons": [
         {
             "src": "/assets/premierLegue.png",

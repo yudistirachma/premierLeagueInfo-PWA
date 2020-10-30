@@ -8,7 +8,6 @@ function saveForLater(club) {
     .then(function(db) {
       var tx = db.transaction("clubs", "readwrite");
       var store = tx.objectStore("clubs");
-      console.log(club);
       store.add(club);
       return tx.complete;
     })
@@ -40,7 +39,6 @@ function getById(id) {
         return store.get(id);
       })
       .then(function(club) {
-        console.log(club);
         resolve(club);
       });
   });
