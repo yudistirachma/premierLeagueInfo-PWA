@@ -59,14 +59,25 @@
           let btnSave = document.getElementById("save");
           let item;
           if (isFromSaved) {
-            // Hide fab jika dimuat dari indexed db
             btnSave.style.display = 'none';
             
-            // ambil artikel lalu tampilkan
             getSavedClubById();
           } else {
             item = getClubById();
+            item.then(function(club) {
+              getById(club.id).then(function (db) {
+                if (db) {
+                  if (db.id == club.id) {
+                    btnSave.innerHTML = "Saved";
+                    btnSave.style.pointerEvents="none";
+                    btnSave.style.cursor="default";
+                    btnSave.style.opacity = "0.5";
+                  }
+                }
+              });
+            });
           }
+
           btnSave.onclick = function() {
             console.log("Tombol FAB di klik.");
             item.then(function(club) {

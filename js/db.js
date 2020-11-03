@@ -8,7 +8,7 @@ function saveForLater(club) {
     .then(function(db) {
       var tx = db.transaction("clubs", "readwrite");
       var store = tx.objectStore("clubs");
-      store.add(club);
+      store.put(club);
       return tx.complete;
     })
     .then(function() {

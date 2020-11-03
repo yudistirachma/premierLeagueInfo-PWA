@@ -21,31 +21,58 @@ function error(error) {
   console.log(error);
 }
 
+// keluaran data getStanding
+function outputStanding(data) {
+  let standingsHTML = "";
+  data.standings[0].table.forEach(function(standing) {
+    standingsHTML += `
+          <tr>
+            <td>
+              <a href="./club.html?id=${standing.team.id}">
+                <img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/><br>${standing.team.name}
+              </a>
+            </td>
+            <td>${standing.playedGames}</td>
+            <td>${standing.won}</td>
+            <td>${standing.lost}</td>
+            <td>${standing.draw}</td>
+            <td>${standing.points}</td>
+          </tr>
+        `;
+  });
+  // Sisipkan komponen card ke dalam elemen dengan id #content
+  document.getElementById("standings").innerHTML = standingsHTML;
+}
+
+// keluaran data getclubById
+function outputClubById(data) {
+  let clubHTML = `
+    <div class="card">
+      <div class="card-image waves-effect waves-block waves-light">
+        <img src="${data.crestUrl}" />
+      </div>
+      <div class="card-content">
+      <h4 class="center-align">${data.name}</h4>
+        <ul class="collection with-header">
+          <li class="collection-item"><span class="card-title">Vanue</span>${data.venue}</li>
+          <li class="collection-item"><span class="card-title">Address</span>${data.address}</li>
+          <li class="collection-item"><span class="card-title">Website</span><a href="${data.website}">${data.website}</a></li>
+        </ul>
+      </div>
+    </div>
+  `;
+  // Sisipkan komponen card ke dalam elemen dengan id #content
+  document.getElementById("body-content").innerHTML = clubHTML;
+  // Kirim objek data hasil parsing json agar bisa disimpan ke indexed db
+}
+
 // Blok kode untuk melakukan request data json
 function getStandings() {
   if ('caches' in window) {
     caches.match(BASE_URL + "competitions/2021/standings").then(function(response) {
       if (response) {
         response.json().then(function (data) {
-          let standingsHTML = "";
-          data.standings[0].table.forEach(function(standing) {
-            standingsHTML += `
-                  <tr>
-                    <td>
-                      <a href="./club.html?id=${standing.team.id}">
-                        <img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/><br>${standing.team.name}
-                      </a>
-                    </td>
-                    <td>${standing.playedGames}</td>
-                    <td>${standing.won}</td>
-                    <td>${standing.lost}</td>
-                    <td>${standing.draw}</td>
-                    <td>${standing.points}</td>
-                  </tr>
-                `;
-          });
-          // Sisipkan komponen card ke dalam elemen dengan id #content
-          document.getElementById("standings").innerHTML = standingsHTML;
+          outputStanding(data);
         })
       }
     })
@@ -57,25 +84,7 @@ function getStandings() {
     .then(status)
     .then(json)
     .then(function(data) {
-        let standingsHTML = "";
-        data.standings[0].table.forEach(function(standing) {
-          standingsHTML += `
-            <tr>
-              <td>
-                <a href="./club.html?id=${standing.team.id}">
-                  <img src="${standing.team.crestUrl.replace(/^http:\/\//i, 'https://')}" width="30px" alt="badge"/><br>${standing.team.name}
-                </a>
-              </td>
-              <td>${standing.playedGames}</td>
-              <td>${standing.won}</td>
-              <td>${standing.lost}</td>
-              <td>${standing.draw}</td>
-              <td>${standing.points}</td>
-            </tr>
-          `;
-        });
-        // Sisipkan komponen card ke dalam elemen dengan id #content
-        document.getElementById("standings").innerHTML = standingsHTML;
+      outputStanding(data);
     })
     .catch(error);
   }
@@ -89,24 +98,7 @@ function getClubById() {
       caches.match(BASE_URL + "teams/"+ idParam).then(function(response) {
         if (response) {
           response.json().then(function (data) {
-            let clubHTML = `
-              <div class="card">
-                <div class="card-image waves-effect waves-block waves-light">
-                  <img src="${data.crestUrl}" />
-                </div>
-                <div class="card-content">
-                <h4 class="center-align">${data.name}</h4>
-                  <ul class="collection with-header">
-                    <li class="collection-item"><span class="card-title">Vanue</span>${data.venue}</li>
-                    <li class="collection-item"><span class="card-title">Address</span>${data.address}</li>
-                    <li class="collection-item"><span class="card-title">Website</span><a href="${data.website}">${data.website}</a></li>
-                  </ul>
-                </div>
-              </div>
-            `;
-            // Sisipkan komponen card ke dalam elemen dengan id #content
-            document.getElementById("body-content").innerHTML = clubHTML;
-            // Kirim objek data hasil parsing json agar bisa disimpan ke indexed db
+            outputClubById(data);
             resolve(data);
           })
         }
@@ -119,24 +111,7 @@ function getClubById() {
       .then(status)
       .then(json)
       .then(function(data) {
-        let clubHTML = `
-            <div class="card">
-              <div class="card-image waves-effect waves-block waves-light">
-                <img src="${data.crestUrl}" />
-              </div>
-              <div class="card-content">
-                <h4 class="center-align">${data.name}</h4>
-                <ul class="collection with-header">
-                  <li class="collection-item"><span class="card-title">Vanue</span>${data.venue}</li>
-                  <li class="collection-item"><span class="card-title">Address</span>${data.address}</li>
-                  <li class="collection-item"><span class="card-title">Website</span><a href="${data.website}">${data.website}</a></li>
-                </ul>
-              </div>
-            </div>
-        `;
-        // Sisipkan komponen card ke dalam elemen dengan id #content
-        document.getElementById("body-content").innerHTML = clubHTML;
-        // Kirim objek data hasil parsing json agar bisa disimpan ke indexed db
+        outputClubById(data);
         resolve(data);
       });
     }
@@ -147,25 +122,30 @@ function getSavedClubs() {
   getAll().then(function(clubs) {
     // Menyusun komponen card artikel secara dinamis
     var clubsHTML = "";
-    clubs.forEach(function(club) {
-      clubsHTML += `
-        <div class="card horizontal">
-          <div class="card-image">
-            <a href="./club.html?id=${club.id}&saved=true" class="row">
-              <img src="${club.crestUrl}">
-            </a>
-          </div>
-          <div class="card-stacked">
-            <div class="card-content">
-              <p><h4>${club.name}</h4></p>
+    if (clubs == 0) {
+      clubsHTML += `<h5 class="center-align">Belum Menambahkan Club</h5>`
+    }else{
+      clubs.forEach(function(club) {
+        clubsHTML += `
+          <div class="card horizontal">
+            <div class="card-image">
+              <a href="./club.html?id=${club.id}&saved=true" class="row">
+                <img src="${club.crestUrl}">
+              </a>
             </div>
-            <div class="card-action">
-              <a class="indigo lighten-4 btn-small" onclick="delById(${club.id}).then(()=>{getSavedClubs()})">delete</a>
+            <div class="card-stacked">
+              <div class="card-content">
+                <p><h4>${club.name}</h4></p>
+              </div>
+              <div class="card-action">
+                <a class="indigo lighten-4 btn-small" onclick="delById(${club.id}).then(()=>{getSavedClubs()})">delete</a>
+              </div>
             </div>
           </div>
-        </div>
-      `;
-    });
+        `;
+      });
+    }
+    
     // Sisipkan komponen card ke dalam elemen dengan id #body-content
     document.getElementById("body-content").innerHTML = clubsHTML;
   });

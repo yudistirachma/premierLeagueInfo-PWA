@@ -1,7 +1,7 @@
 {
-    "name": "Premier Legue",
-    "short_name": "Premier Legue",
-    "description": "Premier Legue",
+    "name": "Premier League",
+    "short_name": "Premier League",
+    "description": "Premier League",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#c5cae9",
@@ -14,7 +14,7 @@
             "type": "image/png"
         },
         {
-            "src": "/assets/premierLegue.png",
+            "src": "/assets/premierLegue-maskable.png",
             "sizes": "196x196",
             "type": "image/png",
             "purpose": "maskable"

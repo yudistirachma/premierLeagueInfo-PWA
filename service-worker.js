@@ -1,67 +1,57 @@
-const CACHE_NAME = 'football-v1';
-var urlsToCache = [
-  "/",
-  "/manifest.json",
-  "/nav.html",
-  "/index.html",
-  "/club.html",
-  "/pages/standings.html",
-  "/pages/saved.html",
-  "/css/materialize.min.css",
-  "/assets/premierLegue.png",
-  "/js/materialize.min.js",
-  "/js/api.js",
-  "/js/idb.js",
-  "/js/db.js",
-  "/js/nav.js",
-  "/js/notifConfig.js",
-];
- 
-self.addEventListener("install", function(event) {
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(function(cache) {
-      return cache.addAll(urlsToCache);
-    })
-  );
-});
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
-self.addEventListener("fetch", function(event) {
-  const BASE_URL = "https://api.football-data.org/v2/";
-  const API_TOKEN = "975306a677b5443a907de9b44516c82a";
-  if (event.request.url.indexOf(BASE_URL) > -1) {
-    event.respondWith(
-      caches.open(CACHE_NAME).then(function(cache) {
-        return fetch(event.request, { headers: { 'X-Auth-Token' : API_TOKEN } })
-        .then(function(response) {
-          cache.put(event.request.url, response.clone());
-          return response;
-        })
-      })
-    );
-  } else {
-    event.respondWith(
-      caches.match(event.request, { ignoreSearch: true }).then(function(response) {
-        return response || fetch (event.request);
-      })
-    )
+workbox.precaching.precacheAndRoute([
+  {url: '/manifest.json', revision: '1'},
+  {url: '/nav.html', revision: '1'},
+  {url: '/index.html', revision: '1' },
+  {url: '/club.html', revision: '1' },
+  {url: '/pages/standings.html', revision: '1' },
+  {url: '/pages/saved.html', revision: '1' },
+  {url: '/css/materialize.min.css', revision: '1' },
+  {url: '/assets/premierLegue.png', revision: '1' },
+  {url: '/assets/premierLegue-maskable.png', revision: '1' },
+  {url: '/js/materialize.min.js', revision: '1' },
+  {url: '/js/api.js', revision: '1' },
+  {url: '/js/idb.js', revision: '1' },
+  {url: '/js/db.js', revision: '1' },
+  {url: '/js/nav.js', revision: '1' },
+  {url: '/js/notifConfig.js', revision: '1' }
+  ],{
+    ignoreUrlParametersMatching: [/.*/]
   }
-});
+);
 
-self.addEventListener("activate", function(event) {
-    event.waitUntil(
-      caches.keys().then(function(cacheNames) {
-        return Promise.all(
-          cacheNames.map(function(cacheName) {
-            if (cacheName != CACHE_NAME) {
-              console.log("ServiceWorker: cache " + cacheName + " dihapus");
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
-    );
-});
+workbox.routing.registerRoute(
+  /^https:\/\/api\.football-data\.org\/v2/,
+  workbox.strategies.staleWhileRevalidate({
+    cacheName: 'football-data',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 30 * 24 * 60 * 60,
+        maxEntries: 60,
+      }),
+    ],
+  })
+);
 
+workbox.routing.registerRoute(
+  /^https:\/\/fonts\.googleapis\.com/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'google-fonts-stylesheets',
+    plugins: [
+      new workbox.cacheableResponse.Plugin({
+        statuses: [0, 200],
+      }),
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 30,
+      }),
+    ],
+  })
+);
 
 self.addEventListener('notificationclick', function (event) {
   if (!event.action) {
@@ -96,7 +86,6 @@ self.addEventListener('push', function(event) {
   }
   var options = {
     body: body,
-    icon: 'img/notification.png',
     vibrate: [100, 50, 100],
     data: {
       dateOfArrival: Date.now(),
