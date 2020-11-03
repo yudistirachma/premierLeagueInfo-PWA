@@ -11,10 +11,10 @@ webPush.setVapidDetails(
    vapidKeys.privateKey
 )
 var pushSubscription = {
-   "endpoint": "https://fcm.googleapis.com/fcm/send/dl8AZKLdDFo:APA91bGc6MOIWZkfyirGVe3EOeiwSsx4kcjMmMSmG_cn7WAZYWY85SXnxICL_rjqVKSUlQeUalAjgSqV9TNK1LTRs1xfjn7RbSVYotaAkM3GiDu3Yz3jVU51Hg2Pll4oVil4B9XXTgeX",
+   "endpoint": "https://fcm.googleapis.com/fcm/send/dyMEE7uiVT8:APA91bHns5pyF4pyH9WukThLSgW6w7wO0M81fRXPUbPnF1tnC8xbMyvrsnBWouEPZecCi40n9wNjcwsq4NOelHqMN4J4wEbOIsRLE-cv3QlgVYNjR6Zpag-gm4ohqJ1krl6ymS2ybvqO",
    "keys": {
-       "p256dh": "BFcd8dKnCxL9hl6FuhRPSv3rZ6mxeYxq+xk7QE3BXSbygMTKvCl4Ujk+RJ84hbIDTTV3FU1A9qsVG+zAik5kbm4=",
-       "auth": "YzVHGi/Md4k5Qxuwd8hRMw=="
+       "p256dh": "BEW1j+1ZKEhTt81pQaDgwRmn2Dq73Z5ahvLQaA715jakNrb5iBfes8QzPwVTCWNGitBLXcQsllUxlY2ARBRryuc=",
+       "auth": "CiwYw5rdoQ1HGd2Zf0BzsQ=="
    }
 };
 var payload = 'Ayo cek aplikasi ada info klasemen terbalu loh !';

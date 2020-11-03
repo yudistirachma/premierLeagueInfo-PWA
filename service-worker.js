@@ -15,6 +15,9 @@ workbox.precaching.precacheAndRoute([
   {url: '/js/idb.js', revision: '1' },
   {url: '/js/db.js', revision: '1' },
   {url: '/js/nav.js', revision: '1' },
+  {url: '/js/index.js', revision: '1' },
+  {url: '/js/club.js', revision: '1' },
+  {url: '/js/worker.js', revision: '1' },
   {url: '/js/notifConfig.js', revision: '1' }
   ],{
     ignoreUrlParametersMatching: [/.*/]
