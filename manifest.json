@@ -2,7 +2,7 @@
     "name": "Premier League",
     "short_name": "Premier League",
     "description": "Premier League",
-    "start_url": "/index.html",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#c5cae9",
     "theme_color": "#c5cae9",
