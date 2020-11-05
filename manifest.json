@@ -2,19 +2,19 @@
     "name": "Premier League",
     "short_name": "Premier League",
     "description": "Premier League",
-    "start_url": "/index.html",
+    "start_url": "/",
     "display": "standalone",
     "background_color": "#c5cae9",
     "theme_color": "#c5cae9",
     "gcm_sender_id": "288788509592",
     "icons": [
         {
-            "src": "/assets/premierLegue.png",
+            "src": "assets/premierLegue.png",
             "sizes": "512x512",
             "type": "image/png"
         },
         {
-            "src": "/assets/premierLegue-maskable.png",
+            "src": "assets/premierLegue-maskable.png",
             "sizes": "196x196",
             "type": "image/png",
             "purpose": "maskable"
