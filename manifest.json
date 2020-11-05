@@ -2,7 +2,7 @@
     "name": "Premier League",
     "short_name": "Premier League",
     "description": "Premier League",
-    "start_url": "premierLeagueInfoPWA.github.io/",
+    "start_url": "premierLeagueInfoPWA.github.io/index.html",
     "display": "standalone",
     "background_color": "#c5cae9",
     "theme_color": "#c5cae9",
